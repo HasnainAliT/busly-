@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import session from 'express-session'
 import { createServer, type Server } from 'node:http'

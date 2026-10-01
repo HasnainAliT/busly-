@@ -6,6 +6,7 @@
  */
 import mongoose from 'mongoose'
 import { randomBytes } from 'node:crypto'
+import 'dotenv/config'
 import { MongoRepo } from '../server/repo/mongo'
 import { buildModels } from '../server/repo/models'
 import { createSeedData } from '../src/domain/seed'

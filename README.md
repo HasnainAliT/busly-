@@ -15,7 +15,7 @@ Development with hot reload: `npm run dev:all` (web on 5173, API on 8787, `/api`
 `npm run dev` alone runs the UI with the in-browser demo backend (no server needed).
 
 ## Configure (copy `.env.example` to `.env`)
-Nothing is hardcoded; every secret is read from the environment.
+The server loads `.env` automatically through `dotenv`. Keep `.env` local and commit only `.env.example`; every secret is read from the environment.
 1. **MongoDB Atlas**: create a database user (Database Access) and allow your IP (Network Access), then set `MONGODB_URI` and `MONGODB_DB`. Check it with `npm run db:check` (connects, creates indexes, round-trips a document, reports clearly on failure). Without `MONGODB_URI` the app uses `server/data/db.json`.
 2. **Sessions**: set `SESSION_SECRET` (32+ random characters).
 3. **Google sign-in**: in Google Cloud Console create an OAuth client (Web application) and add the redirect URI `http://localhost:8787/api/auth/google/callback`. Set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`. Until they are set, "Continue with Google" explains that it is not configured.

@@ -29,3 +29,5 @@ e2e/shots
 .vitest
 
 .env
+.env.*
+!.env.example
