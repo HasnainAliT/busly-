@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Design tokens (HSL channels). Light, editorial, deep-green. ---------- */
+@layer base {
+  :root {
+    --background: 42 33% 96%;          /* warm off-white */
+    --foreground: 165 45% 11%;         /* deep teal ink */
+    --ink: 165 42% 12%;                /* tint used by white/NN utilities (see tailwind.config) */
+    --surface: 44 30% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 165 45% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 165 45% 11%;
+    --primary: 161 62% 16%;            /* deep forest green */
+    --primary-foreground: 45 40% 97%;
+    --secondary: 172 42% 28%;          /* dark teal */
+    --secondary-foreground: 45 40% 97%;
+    --muted: 150 22% 93%;
+    --muted-foreground: 166 14% 36%;   /* 5.9:1 on the off-white */
+    --accent: 148 38% 90%;             /* soft mint */
+    --accent-foreground: 161 62% 16%;
+    --destructive: 2 62% 44%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 62% 28%;
+    --warning: 30 88% 34%;
+    --border: 150 16% 85%;
+    --input: 150 14% 80%;
+    --ring: 161 55% 30%;
+    --radius: 16px;
+  }
+
+  * { @apply border-border; }
+  html { color-scheme: light; -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    overflow-x: hidden;
+    min-height: 100dvh;
+    background-image:
+      radial-gradient(900px 520px at 8% -10%, hsl(148 45% 86% / .55), transparent 62%),
+      radial-gradient(760px 480px at 100% 0%, hsl(40 55% 90% / .6), transparent 60%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, .font-display { font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif; letter-spacing: -0.015em; font-variation-settings: 'opsz' 96; }
+  :focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; border-radius: 8px; }
+  ::selection { background: hsl(var(--accent)); color: hsl(var(--primary)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  }
+}
+
+/* ---------- Surfaces ---------- */
+@layer components {
+  /* Keep the editorial serif at a calm weight even where a component asks for bold. */
+  .font-display.font-bold, .font-display.font-semibold, h1.font-bold, h2.font-bold, h2.font-semibold, h3.font-semibold { font-weight: 560; }
+  .glass {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 2px hsl(165 30% 20% / .04), 0 10px 28px -16px hsl(165 35% 20% / .16);
+  }
+  .glass-strong {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 2px 4px hsl(165 30% 20% / .04), 0 24px 56px -24px hsl(165 40% 18% / .28);
+  }
+  .glass-dark {
+    background: linear-gradient(180deg, hsl(168 38% 13%), hsl(168 45% 9%));
+    border: 1px solid hsl(0 0% 100% / .08);
+    color: hsl(45 40% 97%);
+  }
+  .text-gradient {
+    background: linear-gradient(100deg, hsl(161 62% 16%), hsl(172 45% 34%) 70%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(var(--ink) / .05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--ink) / .05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em] text-secondary; }
+}
+
+/* Route draw animation */
+@keyframes dash-flow { to { stroke-dashoffset: -28; } }
+.route-flow { animation: dash-flow 1.4s linear infinite; }
+
+/* Printable operations report: hide navigation chrome, keep the data. */
+@media print {
+  aside, nav, header[role="banner"], [data-print-hide] { display: none !important; }
+  body { background: #fff !important; }
+  * { box-shadow: none !important; animation: none !important; }
+}
